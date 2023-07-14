@@ -4,8 +4,8 @@ import Nav from '../components/Nav';
 import Provider from '../components/Provider';
 
 export const metadata = {
-    title: "Gestão de Eventos",
-    description: "Plataforma de Gestão de Eventos",
+    title: "Systems Manager",
+    description: "Sistema de Gestão Empresarial Integrado",
 }
 
 function RootLayout({children}) {

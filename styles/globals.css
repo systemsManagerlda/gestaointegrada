@@ -73,6 +73,12 @@
 
 /* Tailwind Styles */
 
+@layer components {
+  .sidebar{
+    transition:all .4s ease-in-out;
+  }
+}
+
 .countdown .content{
   width: 100%;
   display: flex;
@@ -124,7 +130,7 @@
 }
 
 .black_btn {
-  @apply rounded-full border bg-primary-orange py-1.5 px-5 text-white transition-all hover:bg-white hover:text-black text-center text-sm font-inter flex items-center justify-center;
+  @apply rounded-full border bg-blue-500 py-1.5 px-5 text-white transition-all hover:bg-white hover:text-black text-center text-sm font-inter flex items-center justify-center;
 }
 
 .outline_btn {

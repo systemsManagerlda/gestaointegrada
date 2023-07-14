@@ -23,8 +23,8 @@ function Nav() {
     <div className="flex-between w-full mb-16 pt-3">
         <Link className="flex gap-2 flex-center" href={"/"}>
             <Image 
-            src={"/assets/images/logo.png"}
-            alt={"Gestao de Eventos Logo"}
+            src={"/assets/images/logo2.png"}
+            alt={"Systems Manager Logo"}
             width={100}
             height={30}
             className="object-contain"          
@@ -34,9 +34,6 @@ function Nav() {
         <div className="sm:flex hidden">
             {session?.user ? (
                 <div className="flex gap-3 md:gap-5">
-                    <Link href={"/create-prompt"} className="black_btn">
-                        Criar Evento
-                    </Link>
                     <button type={"button"} onClick={signOut} className="outline_btn">
                         Sign Out
                     </button>
@@ -85,13 +82,6 @@ function Nav() {
                             onClick={() => setToggleDropdown(false)}
                             >
                             Perfil
-                            </Link>
-                            <Link 
-                            href={"/create-prompt"}
-                            className="dropdown_link"
-                            onClick={() => setToggleDropdown(false)}
-                            >
-                            Criar Evento
                             </Link>
                             <button
                                 type="button"
