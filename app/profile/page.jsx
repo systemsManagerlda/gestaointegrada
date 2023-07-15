@@ -116,7 +116,7 @@ function Profile() {
                 </Modal.Header>
                 <Modal.Body>
                 <Text id="modal-description">
-                    Não autorização para aceder a esta opção...
+                    Não tem autorização para aceder a este Serviço...
                 </Text>
                
                 </Modal.Body>
