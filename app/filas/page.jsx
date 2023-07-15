@@ -12,7 +12,7 @@ function Filas() {
   return (
         <div className='glassmorphism  flex-grow'>
           <div class="flex space-x-4">
-            <span className='mb-4 font-satoshi font-semibold text-base text-gray-700 p-1'>Para marcar fila selecione um dos serviços:</span>
+            <span className='mb-4 font-satoshi font-semibold text-base text-gray-700 p-1'>Para marcar fila selecione um dos serviços abaixo:</span>
             <Button onPress={() => router.push('/filaTable')} size="sm">Consultar Fila</Button>
           </div>         
           <div class="content-center justify-center mt-4 grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 gap-4">
