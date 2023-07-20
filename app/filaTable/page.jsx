@@ -26,8 +26,8 @@ function FilaTable() {
       const data = await response.json();
       setFilas(data);
     };
-    fetchPosts();
-  }, []);
+    session?.user.id fetchPosts();
+  }, [session?.user.id]);
   useEffect(() => {
     const volatel = [];
     setFilas([]);

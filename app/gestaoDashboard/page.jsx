@@ -40,7 +40,7 @@ function GestaoDashboard() {
       setFilas(data);
     };
     if (session?.user.id) fetchPosts();
-  }, []);
+  }, [session?.user.id]);
   useEffect(() => {
     const volatel = [];
     setFilas([]);
