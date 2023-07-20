@@ -75,6 +75,15 @@ function GestaoDashboard() {
     }
   }
 
+  function filaActual() {
+    const fetchPosts = async () => {
+      const response = await fetch(`/api/filas`);
+      const data = await response.json();
+      setFilas(data);
+    };
+    session?.user.id fetchPosts();
+  }
+
   async function editFilas(iDD2) {
     setProcessando(true);
     try {
@@ -131,6 +140,9 @@ function GestaoDashboard() {
               <Dropdown.Item key="Stélio Aderito">Stélio Aderito</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
+          <Button onPress={() => filaActual()} size="sm">
+         Actualizar Fila
+        </Button>
         </div>
         {processando && (
           <div className="justify-center items-center">

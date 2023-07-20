@@ -44,6 +44,14 @@ function FilaTable() {
     };
     fetchPosts();
   }, [selected]);
+  function filaActual() {
+    const fetchPosts = async () => {
+      const response = await fetch(`/api/filas`);
+      const data = await response.json();
+      setFilas(data);
+    };
+    session?.user.id fetchPosts();
+  }
   return (
     <div className="glassmorphism  flex-grow">
       <div className="flex space-x-4">
@@ -52,6 +60,9 @@ function FilaTable() {
         </span>
         <Button onPress={() => router.push("/filas")} size="sm">
           Add Serviço
+        </Button>
+        <Button onPress={() => filaActual()} size="sm">
+         Actualizar Fila
         </Button>
         <Dropdown>
           <Dropdown.Button flat color="primary" css={{ tt: "capitalize" }}>
