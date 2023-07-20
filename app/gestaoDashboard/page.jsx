@@ -43,7 +43,6 @@ function GestaoDashboard() {
   }, [session?.user.id]);
   useEffect(() => {
     const volatel = [];
-    setFilas([]);
     const fetchPosts = async () => {
       const response = await fetch(`/api/filas`);
       const data = await response.json();
@@ -81,7 +80,7 @@ function GestaoDashboard() {
       const data = await response.json();
       setFilas(data);
     };
-    session?.user.id fetchPosts();
+    fetchPosts();
   }
 
   async function editFilas(iDD2) {
@@ -141,8 +140,8 @@ function GestaoDashboard() {
             </Dropdown.Menu>
           </Dropdown>
           <Button onPress={() => filaActual()} size="sm">
-         Actualizar Fila
-        </Button>
+            Actualizar Fila
+          </Button>
         </div>
         {processando && (
           <div className="justify-center items-center">

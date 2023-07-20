@@ -26,11 +26,10 @@ function FilaTable() {
       const data = await response.json();
       setFilas(data);
     };
-    session?.user.id fetchPosts();
+    fetchPosts();
   }, [session?.user.id]);
   useEffect(() => {
     const volatel = [];
-    setFilas([]);
     const fetchPosts = async () => {
       const response = await fetch(`/api/filas`);
       const data = await response.json();
@@ -50,7 +49,7 @@ function FilaTable() {
       const data = await response.json();
       setFilas(data);
     };
-    session?.user.id fetchPosts();
+    fetchPosts();
   }
   return (
     <div className="glassmorphism  flex-grow">
@@ -62,7 +61,7 @@ function FilaTable() {
           Add Serviço
         </Button>
         <Button onPress={() => filaActual()} size="sm">
-         Actualizar Fila
+          Actualizar Fila
         </Button>
         <Dropdown>
           <Dropdown.Button flat color="primary" css={{ tt: "capitalize" }}>
