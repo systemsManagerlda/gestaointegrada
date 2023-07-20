@@ -63,9 +63,6 @@ function GestaoDashboard() {
       const response = await fetch(`api/servicos/${iDD2}`, {
         method: "DELETE",
       });
-      if (response.ok) {
-        setVisible(true);
-      }
     } catch (error) {
       console.log(error);
     } finally {
@@ -102,9 +99,6 @@ function GestaoDashboard() {
               dataHora: fila.dataHora,
             }),
           });
-          if (response.ok) {
-            setVisible(true);
-          }
         }
       });
     } catch (error) {
