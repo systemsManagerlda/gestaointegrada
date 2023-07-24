@@ -6,7 +6,7 @@ const getFilas = async () => {
   if (!res.ok) {
     throw new Error("Failed to fetch data");
   }
-  console.log("Server Side");
+
   return res.json();
 };
 
