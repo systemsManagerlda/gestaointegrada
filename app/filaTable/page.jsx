@@ -26,7 +26,7 @@ function FilaTable() {
       setFilas(data);
     };
     fetchPosts();
-  }, []);
+  });
   useEffect(() => {
     const volatel = [];
     const fetchPosts = async () => {
