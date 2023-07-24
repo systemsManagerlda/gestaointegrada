@@ -34,8 +34,7 @@ function GestaoDashboard() {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const response = await fetch(`/api/filas`);
-      const data = await response.json();
+      const data = await getData();
       console.log(data);
       setFilas(data);
     };
@@ -44,8 +43,7 @@ function GestaoDashboard() {
   useEffect(() => {
     const volatel = [];
     const fetchPosts = async () => {
-      const response = await fetch(`/api/filas`);
-      const data = await response.json();
+      const data = await getData();
       data.map((func) => {
         if (selectedValue === func.funcionario) {
           console.log(func);
@@ -73,8 +71,7 @@ function GestaoDashboard() {
 
   function filaActual() {
     const fetchPosts = async () => {
-      const response = await fetch(`/api/filas`);
-      const data = await response.json();
+      const data = await getData();
       setFilas(data);
     };
     fetchPosts();
@@ -266,3 +263,12 @@ function GestaoDashboard() {
 }
 
 export default GestaoDashboard;
+
+async function getData() {
+  const res = await fetch("/api/filas");
+  if (!res.ok) {
+    throw new Error("Failed to fetch data");
+  }
+
+  return res.json();
+}

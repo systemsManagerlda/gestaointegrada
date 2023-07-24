@@ -22,17 +22,15 @@ function FilaTable() {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const response = await fetch(`/api/filas`);
-      const data = await response.json();
+      const data = await getData();
       setFilas(data);
     };
     fetchPosts();
-  }, [session?.user.id]);
+  }, []);
   useEffect(() => {
     const volatel = [];
     const fetchPosts = async () => {
-      const response = await fetch(`/api/filas`);
-      const data = await response.json();
+      const data = await getData();
       data.map((func) => {
         if (selectedValue === func.funcionario) {
           console.log(func);
@@ -45,8 +43,7 @@ function FilaTable() {
   }, [selected]);
   function filaActual() {
     const fetchPosts = async () => {
-      const response = await fetch(`/api/filas`);
-      const data = await response.json();
+      const data = await getData();
       setFilas(data);
     };
     fetchPosts();
@@ -153,3 +150,12 @@ function FilaTable() {
 }
 
 export default FilaTable;
+
+async function getData() {
+  const res = await fetch("/api/filas");
+  if (!res.ok) {
+    throw new Error("Failed to fetch data");
+  }
+
+  return res.json();
+}
