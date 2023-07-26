@@ -265,10 +265,9 @@ function GestaoDashboard() {
 export default GestaoDashboard;
 
 async function getData() {
-  const res = await fetch("/api/filas");
-  if (!res.ok) {
-    throw new Error("Failed to fetch data");
-  }
+  const res = await fetch("/api/codigoAutenticacao", {
+    method: "GET",
+  });
 
   return res.json();
 }

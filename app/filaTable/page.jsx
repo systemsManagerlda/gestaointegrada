@@ -5,7 +5,6 @@ import { useRouter, usePathname } from "next/navigation";
 import React, { useState, useEffect } from "react";
 import { Card, Grid, Text, Button, Row } from "@nextui-org/react";
 import { Dropdown, Modal, useModal, Loading } from "@nextui-org/react";
-import FilaTab from "./table/page";
 
 function FilaTable() {
   const inactiveLink = "flex gap-1 p-1";
@@ -83,7 +82,6 @@ function FilaTable() {
         </Dropdown>
       </div>
 
-      {/* <FilaTab /> */}
       <div className="overflow-auto rounded-lg shadow mt-4">
         <table className="w-full">
           <thead className="bg-blue-100 border=b-2 border-blue-200">
@@ -154,14 +152,9 @@ function FilaTable() {
 export default FilaTable;
 
 async function getData() {
-  const res = await fetch("https://www.systemsmanagerlda.com/api/filas", {
-    next: {
-      revalidate: 3,
-    },
+  const res = await fetch("/api/codigoAutenticacao", {
+    method: "GET",
   });
-  if (!res.ok) {
-    throw new Error("Failed to fetch data");
-  }
 
   return res.json();
 }
