@@ -16,9 +16,15 @@ import {
 import { useSession } from "next-auth/react";
 
 const cortes = [
-  { corte: "Lavar Cabelo Natural", preco: "100" },
-  { corte: "Lavar Dreds", preco: "150" },
-  { corte: "Lavar e Retocar Com Gel Pessoal", preco: "150" },
+  { corte: "Pestanas Humanas do Salão", preco: "250" },
+  { corte: "Pestanas Normais do Salão", preco: "200" },
+  { corte: "Pestanas Humanas a Saia", preco: "200" },
+  { corte: "Pestanas Humanas Normais do Cliente", preco: "100" },
+  { corte: "Retocar Dreds e Lavar com Gel do Salão", preco: "400" },
+  { corte: "Retocar Dreds Sem Lavar com Gel do Salão", preco: "350" },
+  { corte: "Retocar Dreds Sem Lavar com Gel Com Gel Pessoal", preco: "250" },
+  { corte: "Retocar e Fazer Moda com Gel do Salão", preco: "500" },
+  { corte: "Retocar e Fazer Moda com Gel Pessoal", preco: "350" },
 ];
 function LavarCabelo() {
   const inactiveLink = "flex gap-1 p-1";
