@@ -1,5 +1,5 @@
-import Codigo from "@models/codigo";
-import { connectToDB } from "@utils/database";
+import Codigo from "../../../../models/codigo";
+import { connectToDB } from "../../../../utils/database";
 
 export const GET = async (request, { params }) => {
   try {

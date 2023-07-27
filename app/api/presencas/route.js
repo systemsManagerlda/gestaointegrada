@@ -1,8 +1,9 @@
-import Presencas from "@models/presencas";
-import { connectToDB } from "@utils/database";
+import Presencas from "../../../models/presencas";
+import { connectToDB } from "../../../utils/database";
 
 export const POST = async (req, res) => {
-  const { nomeColaborador, horaChegada, data, mes, userId } = await req.json();
+  const { nomeColaborador, horaChegada, data, mes, tipoPresenca, userId } =
+    await req.json();
 
   try {
     await connectToDB();
@@ -11,6 +12,7 @@ export const POST = async (req, res) => {
       nomeColaborador,
       horaChegada,
       data,
+      tipoPresenca,
       mes,
     });
 

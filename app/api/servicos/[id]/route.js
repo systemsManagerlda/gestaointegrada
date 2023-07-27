@@ -1,5 +1,5 @@
-import Servicos from "@models/servicos";
-import { connectToDB } from "@utils/database";
+import Servicos from "../../../../models/servicos";
+import { connectToDB } from "../../../../utils/database";
 
 export const GET = async (request, { params }) => {
   try {

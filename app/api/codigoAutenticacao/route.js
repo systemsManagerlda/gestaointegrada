@@ -1,6 +1,6 @@
-import Codigo from "@models/codigo";
+import Codigo from "../../../models/codigo";
 import Servicos from "../../../models/servicos";
-import { connectToDB } from "@utils/database";
+import { connectToDB } from "../../../utils/database";
 
 export const POST = async (req, res) => {
   const { codigo, userId } = await req.json();

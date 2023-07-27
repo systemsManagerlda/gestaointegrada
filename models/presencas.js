@@ -8,6 +8,7 @@ const PresencasSchema = new Schema({
   nomeColaborador: { type: String, require: true },
   horaChegada: { type: String, require: true },
   data: { type: String, require: true },
+  tipoPresenca: { type: String, require: true },
   mes: { type: String, require: true },
 });
 

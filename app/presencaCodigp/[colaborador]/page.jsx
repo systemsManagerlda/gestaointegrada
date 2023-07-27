@@ -31,9 +31,11 @@ function PresencaCodigo({ params }) {
   const [presencas, setPresencas] = useState([]);
   let colaboradorLocal = "";
   let codigoLocal = "";
+  let tipoPresenca = "";
   if (typeof window !== "undefined") {
     colaboradorLocal = window.localStorage.getItem("colaborador");
     codigoLocal = window.localStorage.getItem("codigo");
+    tipoPresenca = window.localStorage.getItem("tipoPresenca");
   }
 
   useEffect(() => {
@@ -65,24 +67,29 @@ function PresencaCodigo({ params }) {
     presencas.map((cod) => {
       if (true) {
         try {
-          const response = fetch("/api/presencas", {
-            method: "POST",
-            body: JSON.stringify({
-              nomeColaborador: colaboradorLocal,
-              horaChegada: `${currentdate.getHours()}:${currentdate.getMinutes()}:${currentdate.getSeconds()}`,
-              data: `${currentdate.getDate()}/${
-                currentdate.getMonth() + 1
-              }/${currentdate.getFullYear()}`,
-              mes: `${currentdate.getMonth() + 1}`,
-              userId: session?.user.id,
-            }),
-          });
-          setProcessando(false);
-          router.push("/presencas");
+          async function marcarPresenca() {
+            const response = await fetch("/api/presencas", {
+              method: "POST",
+              body: JSON.stringify({
+                nomeColaborador: colaboradorLocal,
+                horaChegada: `${currentdate.getHours()}:${currentdate.getMinutes()}:${currentdate.getSeconds()}`,
+                data: `${currentdate.getDate()}/${
+                  currentdate.getMonth() + 1
+                }/${currentdate.getFullYear()}`,
+                mes: `${currentdate.getMonth() + 1}`,
+                tipoPresenca: tipoPresenca,
+                userId: session?.user.id,
+              }),
+            });
+            setProcessando(false);
+            router.push("/presencas");
+          }
+          marcarPresenca();
         } catch (error) {
           console.log(error);
         }
       } else {
+        setProcessando(false);
         alert("Código Incorrecto!");
         router.push(`/presencaCodigp/${params.colaborador}`);
       }
@@ -105,7 +112,7 @@ function PresencaCodigo({ params }) {
                 placeholder="Código de Autenticação"
               />
               <Row justify="flex-end">
-                {processando && (
+                {processando ? (
                   <div className="justify-center items-center">
                     <Grid.Container gap={2}>
                       <Grid>
@@ -113,14 +120,15 @@ function PresencaCodigo({ params }) {
                       </Grid>
                     </Grid.Container>
                   </div>
+                ) : (
+                  <Button
+                    onPress={() => ConfirmarCodigo()}
+                    type="button"
+                    size="sm"
+                  >
+                    Confirmar
+                  </Button>
                 )}
-                <Button
-                  onPress={() => ConfirmarCodigo()}
-                  type="button"
-                  size="sm"
-                >
-                  Confirmar
-                </Button>
               </Row>
             </Card.Body>
           </Card>

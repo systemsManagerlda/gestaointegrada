@@ -29,9 +29,13 @@ function Presencas() {
   const [nomeEmpresa, setNomeEmpresa] = useState("");
   const [senha, setSenha] = useState("");
   const [codigoAutenticacao, setCodigoAutenticacao] = useState("");
+  const [dataSelecionada, setdataSelecionada] = useState("");
   const [presencas, setPresencas] = useState([]);
   const [selected, setSelected] = React.useState(new Set(["Funcionário"]));
   const [selected2, setSelected2] = React.useState(new Set(["Mês"]));
+  const [selected3, setSelected3] = React.useState(
+    new Set(["Tipo de Presença"])
+  );
   const [presencasTabela, setPresencasTabela] = useState([]);
   const month = [
     "January",
@@ -58,6 +62,10 @@ function Presencas() {
   const selectedValue2 = React.useMemo(
     () => Array.from(selected2).join(", ").replaceAll("_", " "),
     [selected2]
+  );
+  const selectedValue3 = React.useMemo(
+    () => Array.from(selected3).join(", ").replaceAll("_", " "),
+    [selected3]
   );
   useEffect(() => {
     const fetchPosts = async () => {
@@ -134,6 +142,7 @@ function Presencas() {
                   setProcessando(true);
                   window.localStorage.setItem("colaborador", nomeColaborador);
                   window.localStorage.setItem("codigo", codigoGerado);
+                  window.localStorage.setItem("tipoPresenca", selectedValue3);
                   router.push(`/presencaCodigp/${nomeColaborador}`);
                 } catch (error) {
                   console.log(error);
@@ -154,6 +163,7 @@ function Presencas() {
                     setProcessando(true);
                     window.localStorage.setItem("colaborador", nomeColaborador);
                     window.localStorage.setItem("codigo", codigoGerado);
+                    window.localStorage.setItem("tipoPresenca", selectedValue3);
                     router.push(`/presencaCodigp/${nomeColaborador}`);
                   });
                 } catch (error) {
@@ -175,6 +185,36 @@ function Presencas() {
       }
     } catch (error) {
       console.log(error);
+    }
+  }
+  function filtro() {
+    const novoFiltro = [];
+    if (selectedValue === "Funcionário" || dataSelecionada === "") {
+      alert("Nenhum paramentro seleccionado");
+    } else {
+      const dataD = new Date(dataSelecionada);
+      let mesSeleccionado = month[dataD.getMonth()];
+      console.log(mesSeleccionado);
+      try {
+        const fetchPosts = async () => {
+          const response = await fetch(`/api/presencas/${session?.user.id}`);
+          const data = await response.json();
+          data.map((cola) => {
+            console.log(month[parseInt(cola.mes) - 1]);
+            if (cola.nomeColaborador === selectedValue) {
+              if (month[parseInt(cola.mes) - 1] === mesSeleccionado) {
+                novoFiltro.push(cola);
+                console.log("Aqui");
+              }
+            }
+          });
+          console.log(novoFiltro);
+          setPresencasTabela(novoFiltro);
+        };
+        if (session?.user.id) fetchPosts();
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
   return (
@@ -201,6 +241,27 @@ function Presencas() {
                   type="text"
                   placeholder="Nome da Empresa"
                 />
+                <Dropdown>
+                  <Dropdown.Button
+                    flat
+                    color="primary"
+                    css={{ tt: "capitalize" }}
+                  >
+                    {selectedValue3}
+                  </Dropdown.Button>
+                  <Dropdown.Menu
+                    aria-label="Single selection actions"
+                    color="primary"
+                    disallowEmptySelection
+                    selectionMode="single"
+                    selectedKeys={selected3}
+                    onSelectionChange={setSelected3}
+                  >
+                    <Dropdown.Item key="Entrada">Entrada</Dropdown.Item>
+                    <Dropdown.Item key="Saida">Saida</Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+                <div className="mb-4"></div>
                 <Input
                   value={senha}
                   onChange={(ev) => setSenha(ev.target.value)}
@@ -209,7 +270,7 @@ function Presencas() {
                   placeholder="Senha"
                 />
                 <Row justify="flex-end">
-                  {processando && (
+                  {processando ? (
                     <div className="justify-center items-center">
                       <Grid.Container gap={2}>
                         <Grid>
@@ -217,14 +278,15 @@ function Presencas() {
                         </Grid>
                       </Grid.Container>
                     </div>
+                  ) : (
+                    <Button
+                      onPress={() => CondigoAutenticacao()}
+                      type="button"
+                      size="sm"
+                    >
+                      Confirmar
+                    </Button>
                   )}
-                  <Button
-                    onPress={() => CondigoAutenticacao()}
-                    type="button"
-                    size="sm"
-                  >
-                    Confirmar
-                  </Button>
                 </Row>
               </Card.Body>
             </Card>
@@ -234,29 +296,11 @@ function Presencas() {
       <div className="glassmorphism flex-grow mt-4">
         <div className="flex space-x-4">
           <Input
-            // value={nomeColaborador}
-            // onChange={(ev) => setNomeColaborador(ev.target.value)}
+            value={dataSelecionada}
+            onChange={(ev) => setdataSelecionada(ev.target.value)}
             className="mb-4"
             type="date"
-            placeholder="Data"
           />
-          <Dropdown>
-            <Dropdown.Button flat color="primary" css={{ tt: "capitalize" }}>
-              {selectedValue2}
-            </Dropdown.Button>
-            <Dropdown.Menu
-              aria-label="Single selection actions"
-              color="primary"
-              disallowEmptySelection
-              selectionMode="single"
-              selectedKeys={selected2}
-              onSelectionChange={setSelected2}
-            >
-              {month.map((meses) => (
-                <Dropdown.Item key={meses}>{meses}</Dropdown.Item>
-              ))}
-            </Dropdown.Menu>
-          </Dropdown>
           <Dropdown>
             <Dropdown.Button flat color="primary" css={{ tt: "capitalize" }}>
               {selectedValue}
@@ -269,14 +313,27 @@ function Presencas() {
               selectedKeys={selected}
               onSelectionChange={setSelected}
             >
-              <Dropdown.Item key="Carlos Avelino">Carlos Avelino</Dropdown.Item>
+              <Dropdown.Item key="Carlos Avelino Mabote">
+                Carlos Avelino Mabote
+              </Dropdown.Item>
               <Dropdown.Item key="Alimiro Pires">Alimiro Pires</Dropdown.Item>
-              <Dropdown.Item key="Amélia Marcos">Amélia Marcos</Dropdown.Item>
-              <Dropdown.Item key="Glória David">Glória David</Dropdown.Item>
-              <Dropdown.Item key="Moises Lucas">Moises Lucas</Dropdown.Item>
-              <Dropdown.Item key="Stélio Aderito">Stélio Aderito</Dropdown.Item>
+              <Dropdown.Item key="Amelia Marcos Franguana">
+                Amelia Marcos Franguana
+              </Dropdown.Item>
+              <Dropdown.Item key="Gloria David Timane">
+                Gloria David Timane
+              </Dropdown.Item>
+              <Dropdown.Item key="Moises Lucas Cuna">
+                Moises Lucas Cuna
+              </Dropdown.Item>
+              <Dropdown.Item key="Stelio Aderito Fanheiro">
+                Stelio Aderito Fanheiro
+              </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
+          <Button onPress={() => filtro()} type="button" size="sm">
+            Filtrar
+          </Button>
         </div>
         <div className="overflow-auto rounded-lg shadow mt-4">
           <table className="w-full">
@@ -284,6 +341,7 @@ function Presencas() {
               <tr>
                 <th className="">Nome do Colaborador</th>
                 <th className="">Hora de Chegada</th>
+                <th className="">Tipo de Presença</th>
                 <th className="w-24">Data</th>
               </tr>
             </thead>
@@ -298,6 +356,9 @@ function Presencas() {
                         </td>
                         <td className="whitespace-nowrap p-3 text-sm text-gray-700">
                           {fila.horaChegada}
+                        </td>
+                        <td className="whitespace-nowrap p-3 text-sm text-gray-700">
+                          {fila.tipoPresenca}
                         </td>
                         <td className="whitespace-nowrap p-3 text-sm text-gray-700">
                           {fila.data}
