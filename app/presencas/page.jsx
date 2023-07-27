@@ -20,6 +20,7 @@ import {
 function Presencas() {
   const { data: session } = useSession();
   const [processando, setProcessando] = useState(false);
+  const [tempoMarcacao, settempoMarcacao] = useState(false);
   const inactiveLink = "flex gap-1 p-1";
   const activeLink = inactiveLink + " bg-primary-orange rounded-lg text-white";
   const router = useRouter();
@@ -82,6 +83,19 @@ function Presencas() {
       const response = await fetch(`/api/presencas/${session?.user.id}`);
       const data = await response.json();
       console.log(data);
+
+      var currentdate = new Date();
+      var datetime =
+        currentdate.getHours() +
+        ":" +
+        currentdate.getMinutes() +
+        ":" +
+        currentdate.getSeconds();
+
+      var str1 = datetime,
+        str2 = "09:30:00";
+      if (str1 > str2) settempoMarcacao(false);
+      else settempoMarcacao(true);
       setPresencasTabela(data);
     };
     if (session?.user.id) fetchPosts();
@@ -270,22 +284,30 @@ function Presencas() {
                   placeholder="Senha"
                 />
                 <Row justify="flex-end">
-                  {processando ? (
-                    <div className="justify-center items-center">
-                      <Grid.Container gap={2}>
-                        <Grid>
-                          <Loading color="primary"></Loading>
-                        </Grid>
-                      </Grid.Container>
-                    </div>
+                  {tempoMarcacao ? (
+                    <>
+                      {processando ? (
+                        <div className="justify-center items-center">
+                          <Grid.Container gap={2}>
+                            <Grid>
+                              <Loading color="primary"></Loading>
+                            </Grid>
+                          </Grid.Container>
+                        </div>
+                      ) : (
+                        <Button
+                          onPress={() => CondigoAutenticacao()}
+                          type="button"
+                          size="sm"
+                        >
+                          Confirmar
+                        </Button>
+                      )}
+                    </>
                   ) : (
-                    <Button
-                      onPress={() => CondigoAutenticacao()}
-                      type="button"
-                      size="sm"
-                    >
-                      Confirmar
-                    </Button>
+                    <>
+                      <p>O tempo para marcação de presenças foi excedido</p>
+                    </>
                   )}
                 </Row>
               </Card.Body>
