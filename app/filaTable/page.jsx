@@ -40,6 +40,7 @@ function FilaTable() {
       setFilas(volatel);
     };
     fetchPosts();
+    // teste
   }, [selected]);
   function filaActual() {
     const fetchPosts = async () => {
