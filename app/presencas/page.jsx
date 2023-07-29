@@ -83,7 +83,9 @@ function Presencas() {
       const response = await fetch(`/api/presencas/${session?.user.id}`);
       const data = await response.json();
       console.log(data);
-
+      var hora = "";
+      var min = "";
+      var seg = "";
       var currentdate = new Date();
       var datetime =
         currentdate.getHours() +
@@ -91,11 +93,35 @@ function Presencas() {
         currentdate.getMinutes() +
         ":" +
         currentdate.getSeconds();
+      if (`${currentdate.getHours()}`.length === 1) {
+        hora = `0${currentdate.getHours()}`;
+      } else {
+        hora = `${currentdate.getHours()}`;
+      }
+      if (`${currentdate.getMinutes()}`.length === 1) {
+        min = `0${currentdate.getMinutes()}`;
+      } else {
+        min = `${currentdate.getMinutes()}`;
+      }
+      if (`${currentdate.getSeconds()}`.length === 1) {
+        seg = `0${currentdate.getSeconds()}`;
+      } else {
+        seg = `${currentdate.getSeconds()}`;
+      }
+      const time1 = "06:30:00";
+      const time2 = "09:30:00";
 
-      var str1 = datetime,
-        str2 = "09:30:00";
-      if (str1 > str2) settempoMarcacao(false);
-      else settempoMarcacao(true);
+      if (`${hora}:${min}:${seg}` > time2) {
+        console.log("time1 is greater than time2");
+        settempoMarcacao(false);
+      } else if (time2 > `${hora}:${min}:${seg}`) {
+        // ✅ this runs
+        console.log("time2 is greater than time1");
+        settempoMarcacao(true);
+      } else {
+        console.log("time1 is equal to time2");
+      }
+
       setPresencasTabela(data);
     };
     if (session?.user.id) fetchPosts();
