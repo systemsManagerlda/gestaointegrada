@@ -18,6 +18,7 @@ import { useSession } from "next-auth/react";
 const cortes = [
   { corte: "Lavar Cabelo Natural", preco: "100" },
   { corte: "Lavar Dreds", preco: "150" },
+  { corte: "Lavar Cabelo Após Corte", preco: "50" },
   { corte: "Lavar e Retocar Com Gel Pessoal", preco: "150" },
 ];
 function LavarCabelo() {

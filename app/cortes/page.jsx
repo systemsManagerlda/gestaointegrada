@@ -16,6 +16,7 @@ import {
 import { useSession } from "next-auth/react";
 
 const cortes = [
+  { corte: "Corte com Navalha", preco: "100" },
   { corte: "Corte com Navalha e Lavar", preco: "150" },
   { corte: "Corte com Navalha e Pintar", preco: "220" },
   { corte: "Corte Simples e Lavar", preco: "190" },

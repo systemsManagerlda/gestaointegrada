@@ -148,7 +148,42 @@ function Presencas() {
     "Gloria7878980",
     "der7878980cia",
   ];
+  function saidaPresenca() {
+    var hora = "";
+    var min = "";
+    var seg = "";
+    var currentdate = new Date();
+    var datetime =
+      currentdate.getHours() +
+      ":" +
+      currentdate.getMinutes() +
+      ":" +
+      currentdate.getSeconds();
+    if (`${currentdate.getHours()}`.length === 1) {
+      hora = `0${currentdate.getHours()}`;
+    } else {
+      hora = `${currentdate.getHours()}`;
+    }
+    if (`${currentdate.getMinutes()}`.length === 1) {
+      min = `0${currentdate.getMinutes()}`;
+    } else {
+      min = `${currentdate.getMinutes()}`;
+    }
+    if (`${currentdate.getSeconds()}`.length === 1) {
+      seg = `0${currentdate.getSeconds()}`;
+    } else {
+      seg = `${currentdate.getSeconds()}`;
+    }
+    const time1 = "20:00:00";
+    const time2 = "23:59:00";
 
+    if (time1 > `${hora}:${min}:${seg}` < time2) {
+      console.log("time1 is greater than time2");
+      settempoMarcacao(true);
+    } else {
+      alert("O tempo de marcação de saída ainda não foi atingido");
+    }
+  }
   function CondigoAutenticacao() {
     setProcessando(true);
     console.log(presencas);
@@ -260,9 +295,15 @@ function Presencas() {
   return (
     <>
       <div className="glassmorphism flex-grow">
-        <span className="mb-4 font-satoshi font-semibold text-base text-gray-700 p-1">
-          Marcar Presença:
-        </span>
+        <div className="flex flex-row gap-4">
+          <span className="mb-4 font-satoshi font-semibold text-base text-gray-700 p-1">
+            Marcar Presença:
+          </span>
+          <Button onPress={() => saidaPresenca()} type="button" size="sm">
+            Saida
+          </Button>
+        </div>
+
         <div className="content-center justify-center mt-4 grid lg:grid-cols-1 md:grid-cols-1 sm:grid-cols-1 gap-4">
           <Container>
             <Card>
