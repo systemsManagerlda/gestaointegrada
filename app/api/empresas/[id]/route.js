@@ -1,5 +1,5 @@
-import Empresas from "../../../models/empresas";
-import { connectToDB } from "../../../utils/database";
+import Empresas from "../../../../models/empresas";
+import { connectToDB } from "../../../../utils/database";
 
 export const PATCH = async (request, { params }) => {
   const {
