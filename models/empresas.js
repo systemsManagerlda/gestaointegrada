@@ -2,10 +2,6 @@ import { Schema, model, models } from "mongoose";
 
 const EmpresaSchema = new Schema(
   {
-    creator: {
-      type: Schema.Types.ObjectId,
-      ref: "User",
-    },
     nomeEmpresa: { type: String, required: true },
     endereco: { type: String, required: true },
     nuit: { type: String, required: true },

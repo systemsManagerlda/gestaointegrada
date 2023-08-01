@@ -62,7 +62,6 @@ export const PATCH = async (request, { params }) => {
     status,
     pacoteAssinado,
     periodo,
-    userId,
   } = await request.json();
   try {
     await connectToDB();
@@ -78,7 +77,6 @@ export const PATCH = async (request, { params }) => {
     existingPrompt.status = status;
     existingPrompt.pacoteAssinado = pacoteAssinado;
     existingPrompt.periodo = periodo;
-    existingPrompt.userId = userId;
 
     await existingPrompt.save();
 

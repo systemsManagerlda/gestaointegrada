@@ -12,7 +12,6 @@ export const POST = async (req, res) => {
     status,
     pacoteAssinado,
     periodo,
-    userId,
   } = await req.json();
 
   try {
@@ -27,7 +26,6 @@ export const POST = async (req, res) => {
       validade,
       status,
       pacoteAssinado,
-      periodo,
     });
 
     await newEvento.save();
