@@ -18,7 +18,7 @@ const nextConfig = {
     return [
       {
         source: "/api/:path*",
-        destination: "https://www.systemsmanagerlda.com/api/:path*",
+        destination: "https://www.systemsmanagerlda.com/:path*",
       },
     ];
   },
