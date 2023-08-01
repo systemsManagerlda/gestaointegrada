@@ -14,14 +14,6 @@ const nextConfig = {
     };
     return config;
   },
-  async rewrites() {
-    return [
-      {
-        source: "/api/:path*",
-        destination: "https://www.systemsmanagerlda.com/:path*",
-      },
-    ];
-  },
   async headers() {
     return [
       {
