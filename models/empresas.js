@@ -19,6 +19,6 @@ const EmpresaSchema = new Schema(
   { timestamps: true }
 );
 
-const Empresass = models.Empresass || model("Empresass", EmpresaSchema);
+const Empresas = models.Empresas || model("Empresas", EmpresaSchema);
 
-export default Empresass;
+export default Empresas;

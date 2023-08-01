@@ -1,4 +1,4 @@
-import Empresass from "../../../models/empresas";
+import Empresas from "../../../models/empresas";
 import { connectToDB } from "../../../utils/database";
 
 export const POST = async (req, res) => {
@@ -17,7 +17,7 @@ export const POST = async (req, res) => {
 
   try {
     await connectToDB();
-    const newEvento = new Empresass({
+    const newEvento = new Empresas({
       creator: userId,
       nomeEmpresa,
       endereco,
@@ -42,7 +42,7 @@ export const GET = async (req, res) => {
   try {
     await connectToDB();
 
-    const prompts = await Empresass.find();
+    const prompts = await Empresas.find();
     return new Response(JSON.stringify(prompts), { status: 200 });
   } catch (error) {
     return new Response("Failed to fetch prompts created by user", {
@@ -66,7 +66,7 @@ export const PATCH = async (request, { params }) => {
   } = await request.json();
   try {
     await connectToDB();
-    const existingPrompt = await Empresass.findById(params.id);
+    const existingPrompt = await Empresas.findById(params.id);
     if (!existingPrompt) return new Response("Not found", { status: 404 });
 
     existingPrompt.nomeEmpresa = nomeEmpresa;
@@ -93,7 +93,7 @@ export const PATCH = async (request, { params }) => {
 export const DELETE = async (request, { params }) => {
   try {
     await connectToDB();
-    await Empresass.findByIdAndRemove(params.id);
+    await Empresas.findByIdAndRemove(params.id);
     return new Response("Sucess", { status: 200 });
   } catch (error) {
     return new Response("Failed to fetch prompts created by user", {

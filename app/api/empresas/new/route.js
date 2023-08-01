@@ -1,5 +1,5 @@
 import { connectToDB } from "../../../../utils/database";
-import Empresass from "../../../../models/empresas";
+import Empresas from "../../../../models/empresas";
 
 export const POST = async (req, res) => {
   const {
@@ -17,7 +17,7 @@ export const POST = async (req, res) => {
 
   try {
     await connectToDB();
-    const newEvento = new Empresass({
+    const newEvento = new Empresas({
       creator: userId,
       nomeEmpresa,
       endereco,
