@@ -177,9 +177,13 @@ function Presencas() {
     const time1 = "20:00:00";
     const time2 = "23:59:00";
 
-    if (time1 > `${hora}:${min}:${seg}` < time2) {
-      console.log("time1 is greater than time2");
-      settempoMarcacao(true);
+    if (time1 < `${hora}:${min}:${seg}`) {
+      if (`${hora}:${min}:${seg}` < time2) {
+        console.log("time1 is greater than time2");
+        settempoMarcacao(true);
+      } else {
+        alert("O tempo de marcação de saída ainda não foi atingido");
+      }
     } else {
       alert("O tempo de marcação de saída ainda não foi atingido");
     }
