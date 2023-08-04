@@ -1,7 +1,7 @@
 import Empresas from "../../../../models/empresas";
 import { connectToDB } from "../../../../utils/database";
 
-export const POST = async (request, { params }) => {
+export const PATCH = async (request, { params }) => {
   const {
     nomeEmpresa,
     endereco,
