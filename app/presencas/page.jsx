@@ -188,6 +188,86 @@ function Presencas() {
       alert("O tempo de marcação de saída ainda não foi atingido");
     }
   }
+  function primeiroTurno() {
+    var hora = "";
+    var min = "";
+    var seg = "";
+    var currentdate = new Date();
+    var datetime =
+      currentdate.getHours() +
+      ":" +
+      currentdate.getMinutes() +
+      ":" +
+      currentdate.getSeconds();
+    if (`${currentdate.getHours()}`.length === 1) {
+      hora = `0${currentdate.getHours()}`;
+    } else {
+      hora = `${currentdate.getHours()}`;
+    }
+    if (`${currentdate.getMinutes()}`.length === 1) {
+      min = `0${currentdate.getMinutes()}`;
+    } else {
+      min = `${currentdate.getMinutes()}`;
+    }
+    if (`${currentdate.getSeconds()}`.length === 1) {
+      seg = `0${currentdate.getSeconds()}`;
+    } else {
+      seg = `${currentdate.getSeconds()}`;
+    }
+    const time1 = "08:30:00";
+    const time2 = "14:00:00";
+
+    if (time1 < `${hora}:${min}:${seg}`) {
+      if (`${hora}:${min}:${seg}` < time2) {
+        console.log("time1 is greater than time2");
+        settempoMarcacao(true);
+      } else {
+        alert("O tempo de marcação ainda não foi atingido");
+      }
+    } else {
+      alert("O tempo de marcação ainda não foi atingido");
+    }
+  }
+  function segundoTurno() {
+    var hora = "";
+    var min = "";
+    var seg = "";
+    var currentdate = new Date();
+    var datetime =
+      currentdate.getHours() +
+      ":" +
+      currentdate.getMinutes() +
+      ":" +
+      currentdate.getSeconds();
+    if (`${currentdate.getHours()}`.length === 1) {
+      hora = `0${currentdate.getHours()}`;
+    } else {
+      hora = `${currentdate.getHours()}`;
+    }
+    if (`${currentdate.getMinutes()}`.length === 1) {
+      min = `0${currentdate.getMinutes()}`;
+    } else {
+      min = `${currentdate.getMinutes()}`;
+    }
+    if (`${currentdate.getSeconds()}`.length === 1) {
+      seg = `0${currentdate.getSeconds()}`;
+    } else {
+      seg = `${currentdate.getSeconds()}`;
+    }
+    const time1 = "13:30:00";
+    const time2 = "20:00:00";
+
+    if (time1 < `${hora}:${min}:${seg}`) {
+      if (`${hora}:${min}:${seg}` < time2) {
+        console.log("time1 is greater than time2");
+        settempoMarcacao(true);
+      } else {
+        alert("O tempo de marcação ainda não foi atingido");
+      }
+    } else {
+      alert("O tempo de marcação ainda não foi atingido");
+    }
+  }
   function CondigoAutenticacao() {
     setProcessando(true);
     console.log(presencas);
@@ -305,6 +385,12 @@ function Presencas() {
           </span>
           <Button onPress={() => saidaPresenca()} type="button" size="sm">
             Saida
+          </Button>
+          <Button onPress={() => primeiroTurno()} type="button" size="sm">
+            Primeiro Turno
+          </Button>
+          <Button onPress={() => segundoTurno()} type="button" size="sm">
+            Segundo Turno
           </Button>
         </div>
 
