@@ -64,36 +64,36 @@ function PresencaCodigo({ params }) {
       currentdate.getMinutes() +
       ":" +
       currentdate.getSeconds();
-    presencas.map((cod) => {
-      if (true) {
-        try {
-          async function marcarPresenca() {
-            const response = await fetch("/api/presencas", {
-              method: "POST",
-              body: JSON.stringify({
-                nomeColaborador: colaboradorLocal,
-                horaChegada: `${currentdate.getHours()}:${currentdate.getMinutes()}:${currentdate.getSeconds()}`,
-                data: `${currentdate.getDate()}/${
-                  currentdate.getMonth() + 1
-                }/${currentdate.getFullYear()}`,
-                mes: `${currentdate.getMonth() + 1}`,
-                tipoPresenca: tipoPresenca,
-                userId: session?.user.id,
-              }),
-            });
-            setProcessando(false);
-            router.push("/presencas");
-          }
-          marcarPresenca();
-        } catch (error) {
-          console.log(error);
+    // presencas.map((cod) => {      
+    // });
+    if (true) {
+      try {
+        async function marcarPresenca() {
+          const response = await fetch("/api/presencas", {
+            method: "POST",
+            body: JSON.stringify({
+              nomeColaborador: colaboradorLocal,
+              horaChegada: `${currentdate.getHours()}:${currentdate.getMinutes()}:${currentdate.getSeconds()}`,
+              data: `${currentdate.getDate()}/${
+                currentdate.getMonth() + 1
+              }/${currentdate.getFullYear()}`,
+              mes: `${currentdate.getMonth() + 1}`,
+              tipoPresenca: tipoPresenca,
+              userId: session?.user.id,
+            }),
+          });
+          setProcessando(false);
+          router.push("/presencas");
         }
-      } else {
-        setProcessando(false);
-        alert("Código Incorrecto!");
-        router.push(`/presencaCodigp/${params.colaborador}`);
+        marcarPresenca();
+      } catch (error) {
+        console.log(error);
       }
-    });
+    } else {
+      setProcessando(false);
+      alert("Código Incorrecto!");
+      router.push(`/presencaCodigp/${params.colaborador}`);
+    }
   }
   return (
     <div className="glassmorphism flex-grow">
