@@ -20,6 +20,7 @@ import {
 function Presencas() {
   const { data: session } = useSession();
   const [processando, setProcessando] = useState(false);
+  const [salrioPresencas, setSalrioPresencas] = useState(false);
   const [tempoMarcacao, settempoMarcacao] = useState(false);
   const inactiveLink = "flex gap-1 p-1";
   const activeLink = inactiveLink + " bg-primary-orange rounded-lg text-white";
@@ -29,6 +30,11 @@ function Presencas() {
   const [nomeColaborador, setNomeColaborador] = useState("");
   const [nomeEmpresa, setNomeEmpresa] = useState("");
   const [senha, setSenha] = useState("");
+  const [bonus, setBonus] = useState("0");
+  const [salarioMes, setSalarioMes] = useState("");
+  const [totalHorasTrabalho, setTotalHorasTrabalho] = useState(0);
+  const [totalHorasExtras, setTotalHorasExtras] = useState(0);
+  const [salarioPorHora, setSalarioPorHora] = useState(0);
   const [codigoAutenticacao, setCodigoAutenticacao] = useState("");
   const [dataSelecionada, setdataSelecionada] = useState("");
   const [presencas, setPresencas] = useState([]);
@@ -136,7 +142,33 @@ function Presencas() {
     "Carlos Avelino Mabote",
     "Gloria David Timane",
     "Dercia Nelson Samuel",
-  ];
+  ]; 
+  const salarios = [
+    {
+      colaborador: "Amelia Marcos Franguana",
+      salario: "5000"
+    },
+    {
+      colaborador: "Stelio Aderito Fanheiro",
+      salario: "5000"
+    },
+    {
+      colaborador: "Almiro Pires",
+      salario: "6500"
+    },
+    {
+      colaborador: "Dercia Nelson Samuel",
+      salario: "3500"
+    },
+    {
+      colaborador: "Moises Lucas Cuna",
+      salario: "3500"
+    },
+    {
+      colaborador: "Fatima Regina Come",
+      salario: "3700"
+    }
+  ]
   const senhas = [
     "bar7878980bershop",
     "barbersho7878980p",
@@ -376,6 +408,70 @@ function Presencas() {
       }
     }
   }
+  function salariosGerado() {
+    setVisible(false)
+    setSalrioPresencas(true)
+    var totalHoraTrabalho = 0;
+    var totalHoraEXtra= 0;
+    const dataD = new Date(dataSelecionada);
+      let mesSeleccionado = month[dataD.getMonth()];
+      try {
+        const fetchPosts = async () => {
+          const response = await fetch(`/api/presencas/${session?.user.id}`);
+          const data = await response.json();
+          salarios.map((salario) => {
+            if (salario.colaborador === selectedValue) {
+              setSalarioMes(salario.salario)
+              setSalarioPorHora((salario.salario/30)/11.5)
+              data.map((cola) => {
+                if (cola.nomeColaborador === selectedValue) {
+                  var string = cola.horaChegada;
+                    var length = 2;
+                    var trimmedStringHora = string.substring(0, length);
+                    var trimmedStringMinutos = string.substring(2, 4);
+                    var trimmedStringMinutosExtra = string.substring(3, 5);
+                  if (month[parseInt(cola.mes) - 1] === mesSeleccionado) {                    
+                    if (parseInt(trimmedStringHora) < 20) {
+                      console.log(string);
+                      console.log("Horas",parseInt(trimmedStringHora));
+                      console.log("Minutos",parseInt(trimmedStringMinutos));
+                      if (parseInt(trimmedStringMinutos)) {
+                        totalHoraTrabalho += 20 - parseInt(trimmedStringHora)+(parseInt(trimmedStringMinutos)*0.5)/30;
+                        setTotalHorasTrabalho(totalHoraTrabalho)
+                      } else {
+                        trimmedStringMinutos = string.substring(3, 5);
+                        console.log("Minutos Else",parseInt(trimmedStringMinutos));
+                        if (parseInt(trimmedStringMinutos)) {
+                          totalHoraTrabalho += 20 - parseInt(trimmedStringHora)+(parseInt(trimmedStringMinutos)*0.5)/30;
+                          setTotalHorasTrabalho(totalHoraTrabalho)
+                        } else {
+                          trimmedStringMinutos = string.substring(2, 4);
+                          console.log("Minutos Else 2",parseInt(trimmedStringMinutos));
+                          totalHoraTrabalho += 20 - parseInt(trimmedStringHora)+(parseInt(trimmedStringMinutos)*0.5)/30;
+                          setTotalHorasTrabalho(totalHoraTrabalho)
+                        }
+                        
+                      }                      
+                    } else {
+                      totalHoraEXtra += (parseInt(trimmedStringHora)-20)+(parseInt(trimmedStringMinutosExtra)*0.5)/30;
+                      // console.log(string);
+                      // console.log("Minutos",(parseInt(trimmedStringMinutosExtra)*0.5)/30);
+                      // console.log("Horas Extras",parseInt(totalHoraEXtra));
+                      // console.log("Horas",parseInt(trimmedStringHora));
+                      setTotalHorasExtras(totalHoraEXtra)
+                    }
+                    
+                  }
+                }
+              });
+            }
+          })
+        };
+        if (session?.user.id) fetchPosts();
+      } catch (error) {
+        console.log(error);
+      }
+  }
   return (
     <>
       <div className="glassmorphism flex-grow">
@@ -391,6 +487,9 @@ function Presencas() {
           </Button>
           <Button onPress={() => segundoTurno()} type="button" size="sm">
             Segundo Turno
+          </Button>
+          <Button onPress={() => setVisible(true)} type="button" size="sm">
+            Gerar Salário
           </Button>
         </div>
 
@@ -495,7 +594,7 @@ function Presencas() {
               <Dropdown.Item key="Carlos Avelino Mabote">
                 Carlos Avelino Mabote
               </Dropdown.Item>
-              <Dropdown.Item key="Alimiro Pires">Alimiro Pires</Dropdown.Item>
+              <Dropdown.Item key="Almiro Pires">Almiro Pires</Dropdown.Item>
               <Dropdown.Item key="Amelia Marcos Franguana">
                 Amelia Marcos Franguana
               </Dropdown.Item>
@@ -515,7 +614,46 @@ function Presencas() {
           </Button>
         </div>
         <div className="overflow-auto rounded-lg shadow mt-4">
-          <table className="w-full">
+          {salrioPresencas ? (
+            <>
+            <table className="w-full">
+            <thead className="bg-blue-100 border=b-2 border-blue-200">
+              <tr>
+                <th className="">Nome do Colaborador</th>
+                <th className="">T. Hora de Trabalho</th>
+                <th className="">T. Hora Extra</th>
+                <th className="">Salário/Hora</th>
+                <th className="">Bônus</th>
+                <th className="">Salario do Mês</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gra">
+            <tr className="bg-white">
+                        <td className=" flex justify-center whitespace-nowrap p-3 text-sm text-gray-700">
+                          {selected}
+                        </td>
+                        <td className="whitespace-nowrap p-3 text-sm text-gray-700">
+                        {totalHorasTrabalho.toFixed(2)}
+                        </td>
+                        <td className="whitespace-nowrap p-3 text-sm text-gray-700">
+                          {totalHorasExtras.toFixed(2)}
+                        </td>
+                        <td className="whitespace-nowrap p-3 text-sm text-gray-700">
+                          {salarioPorHora.toFixed(2)}
+                        </td>
+                        <td className="whitespace-nowrap p-3 text-sm text-gray-700">
+                          {parseInt(bonus)}
+                        </td>
+                        <td className="whitespace-nowrap p-3 text-sm text-gray-700">
+                          {((totalHorasTrabalho.toFixed(2)*salarioPorHora.toFixed(2))+(totalHorasExtras.toFixed(2)*salarioPorHora.toFixed(2))+parseInt(bonus)).toFixed(2)}
+                        </td>
+                      </tr>
+            </tbody>
+          </table>
+            </>
+            ) : (
+            <>
+            <table className="w-full">
             <thead className="bg-blue-100 border=b-2 border-blue-200">
               <tr>
                 <th className="">Nome do Colaborador</th>
@@ -548,8 +686,74 @@ function Presencas() {
                 ))}
             </tbody>
           </table>
+            </>
+            )
+          }
+          
         </div>
       </div>
+      <Modal
+        scroll
+        width="600px"
+        aria-labelledby="modal-title"
+        aria-describedby="modal-description"
+        {...bindings}
+      >
+        <Modal.Header>
+          <Text id="modal-title" size={18}>
+            <span className="mb-4 font-satoshi font-semibold text-base text-gray-700 p-1">
+              Gerar Folha de Salário
+            </span>
+          </Text>
+        </Modal.Header>
+        <Modal.Body>
+          <Dropdown>
+            <Dropdown.Button
+                    flat
+                    color="primary"
+                    css={{ tt: "capitalize" }}
+                  >
+                    {selectedValue}
+                  </Dropdown.Button>
+                  <Dropdown.Menu
+                    aria-label="Single selection actions"
+                    color="primary"
+                    disallowEmptySelection
+                    selectionMode="single"
+                    selectedKeys={selected}
+                    onSelectionChange={setSelected}
+                  >
+                    <Dropdown.Item key="Amelia Marcos Franguana">Amelia Marcos Franguana</Dropdown.Item>
+                    <Dropdown.Item key="Stelio Aderito Fanheiro">Stelio Aderito Fanheiro</Dropdown.Item>
+                    <Dropdown.Item key="Dercio Jara Mbalane">Dercio Jara Mbalane</Dropdown.Item>
+                    <Dropdown.Item key="Almiro Pires">Almiro Pires</Dropdown.Item>
+                    <Dropdown.Item key="Fatima Regina Come">Fatima Regina Come</Dropdown.Item>
+                    <Dropdown.Item key="Moises Lucas Cuna">Moises Lucas Cuna</Dropdown.Item>
+                    <Dropdown.Item key="Carlos Avelino Mabote">Carlos Avelino Mabote</Dropdown.Item>
+                    <Dropdown.Item key="Gloria David Timane">Gloria David Timane</Dropdown.Item>
+                    <Dropdown.Item key="Dercia Nelson Samuel">Dercia Nelson Samuel</Dropdown.Item>
+                  </Dropdown.Menu>
+            </Dropdown>
+            <Input
+                  value={bonus}
+                  onChange={(ev) => setBonus(ev.target.value)}
+                  className="mb-4"
+                  type="number"
+                  placeholder="Bônus"
+                />
+                <Input
+            value={dataSelecionada}
+            onChange={(ev) => setdataSelecionada(ev.target.value)}
+            className="mb-4"
+            type="date"
+          />
+          </Modal.Body>
+        <Modal.Footer>
+          <Button auto onPress={() => salariosGerado()}>
+            OK
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 }
