@@ -449,9 +449,17 @@ function Presencas() {
                           setTotalHorasTrabalho(totalHoraTrabalho)
                         } else {
                           trimmedStringMinutos = string.substring(2, 4);
-                          console.log("Minutos Else 2",parseInt(trimmedStringMinutos));
-                          totalHoraTrabalho += 20 - parseInt(trimmedStringHora)+(parseInt(trimmedStringMinutos)*0.5)/30;
-                          setTotalHorasTrabalho(totalHoraTrabalho)
+                          if (parseInt(trimmedStringMinutos)) {
+                            console.log("Minutos Else 2",parseInt(trimmedStringMinutos));
+                            totalHoraTrabalho += 20 - parseInt(trimmedStringHora)+(parseInt(trimmedStringMinutos)*0.5)/30;
+                            setTotalHorasTrabalho(totalHoraTrabalho)
+                          } else {
+                            trimmedStringMinutos = string.substring(3, 5);
+                            console.log("Minutos Else 3",parseInt(trimmedStringMinutos));
+                            totalHoraTrabalho += 20 - parseInt(trimmedStringHora)+(parseInt(trimmedStringMinutos)*0.5)/30;
+                            setTotalHorasTrabalho(totalHoraTrabalho)
+                          }
+                          
                         }
                         
                       }                      
