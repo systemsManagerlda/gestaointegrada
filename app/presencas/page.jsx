@@ -36,6 +36,8 @@ function Presencas() {
   const [totalHorasTrabalho, setTotalHorasTrabalho] = useState(0);
   const [totalHorasExtras, setTotalHorasExtras] = useState(0);
   const [salarioPorHora, setSalarioPorHora] = useState(0);
+  const [salarioFinal, setSalarioFinal] = useState(0);
+  const [status, setStatus] = useState(0);
   const [codigoAutenticacao, setCodigoAutenticacao] = useState("");
   const [dataSelecionada, setdataSelecionada] = useState("");
   const [presencas, setPresencas] = useState([]);
@@ -44,6 +46,7 @@ function Presencas() {
   const [selected3, setSelected3] = React.useState(
     new Set(["Tipo de Presença"])
   );
+  let moificado = 0;
   const [presencasTabela, setPresencasTabela] = useState([]);
   const month = [
     "January",
@@ -411,7 +414,12 @@ function Presencas() {
       }
     }
   }
+  useEffect(() => {
+    console.log("Modificado",status);
+    setSalarioFinal(((totalHorasTrabalho.toFixed(2)*salarioPorHora.toFixed(2))+(totalHorasExtras.toFixed(2)*salarioPorHora.toFixed(2))+(parseInt(folgas)*11.5*salarioPorHora.toFixed(2))+parseInt(bonus)).toFixed(2))
+  }, [status])
   function salariosGerado() {
+    moificado = 0;
     setVisible(false)
     setSalrioPresencas(true)
     var totalHoraTrabalho = 0;
@@ -471,12 +479,16 @@ function Presencas() {
                       // console.log("Horas",parseInt(trimmedStringHora));
                       setTotalHorasExtras(totalHoraEXtra)
                     }
-                    
+                    moificado += 1;
+                    setStatus(moificado)
                   }
                 }
+                
               });
             }
-          })
+            
+          });
+          
         };
         if (session?.user.id) fetchPosts();
       } catch (error) {
@@ -662,7 +674,7 @@ function Presencas() {
                           {parseInt(bonus)}
                         </td>
                         <td className="whitespace-nowrap p-3 text-sm text-gray-700">
-                          {((totalHorasTrabalho.toFixed(2)*salarioPorHora.toFixed(2))+(totalHorasExtras.toFixed(2)*salarioPorHora.toFixed(2))+(parseInt(folgas)*11.5*salarioPorHora.toFixed(2))+parseInt(bonus)).toFixed(2)}
+                          {salarioFinal}
                         </td>
                       </tr>
             </tbody>
