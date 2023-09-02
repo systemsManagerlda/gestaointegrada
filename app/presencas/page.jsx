@@ -31,6 +31,7 @@ function Presencas() {
   const [nomeEmpresa, setNomeEmpresa] = useState("");
   const [senha, setSenha] = useState("");
   const [bonus, setBonus] = useState("0");
+  const [folgas, setFolgas] = useState("0");
   const [salarioMes, setSalarioMes] = useState("");
   const [totalHorasTrabalho, setTotalHorasTrabalho] = useState(0);
   const [totalHorasExtras, setTotalHorasExtras] = useState(0);
@@ -650,7 +651,7 @@ function Presencas() {
                           {parseInt(bonus)}
                         </td>
                         <td className="whitespace-nowrap p-3 text-sm text-gray-700">
-                          {((totalHorasTrabalho.toFixed(2)*salarioPorHora.toFixed(2))+(totalHorasExtras.toFixed(2)*salarioPorHora.toFixed(2))+parseInt(bonus)).toFixed(2)}
+                          {((totalHorasTrabalho.toFixed(2)*salarioPorHora.toFixed(2))+(totalHorasExtras.toFixed(2)*salarioPorHora.toFixed(2))+(parseInt(folgas)*11.5*salarioPorHora.toFixed(2))+parseInt(bonus)).toFixed(2)}
                         </td>
                       </tr>
             </tbody>
@@ -739,12 +740,21 @@ function Presencas() {
                     <Dropdown.Item key="Dercia Nelson Samuel">Dercia Nelson Samuel</Dropdown.Item>
                   </Dropdown.Menu>
             </Dropdown>
+            <p>Bônus</p>
             <Input
                   value={bonus}
                   onChange={(ev) => setBonus(ev.target.value)}
                   className="mb-4"
                   type="number"
                   placeholder="Bônus"
+                />
+                <p>Folgas</p>
+            <Input
+                  value={folgas}
+                  onChange={(ev) => setFolgas(ev.target.value)}
+                  className="mb-4"
+                  type="number"
+                  placeholder="Folgas"
                 />
                 <Input
             value={dataSelecionada}
