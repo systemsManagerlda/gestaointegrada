@@ -609,6 +609,9 @@ function Presencas() {
               <Dropdown.Item key="Stelio Aderito Fanheiro">
                 Stelio Aderito Fanheiro
               </Dropdown.Item>
+              <Dropdown.Item key="Fatima Regina Come">
+              Fatima Regina Come
+              </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
           <Button onPress={() => filtro()} type="button" size="sm">
