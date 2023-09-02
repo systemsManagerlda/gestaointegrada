@@ -142,6 +142,7 @@ function Presencas() {
     "Carlos Avelino Mabote",
     "Gloria David Timane",
     "Dercia Nelson Samuel",
+    "Fatima Regina Come",
   ]; 
   const salarios = [
     {
@@ -179,6 +180,7 @@ function Presencas() {
     "ca7878980rlos",
     "Gloria7878980",
     "der7878980cia",
+    "Fatima78780ma",
   ];
   function saidaPresenca() {
     var hora = "";
