@@ -46,6 +46,12 @@ function Presencas() {
   const [selected3, setSelected3] = React.useState(
     new Set(["Tipo de Presença"])
   );
+  const [selected4, setSelected4] = React.useState(
+    new Set(["Nome do Colaborador"])
+  );
+  const [selected5, setSelected5] = React.useState(
+    new Set(["Nome da Empresa"])
+  );
   let moificado = 0;
   const [presencasTabela, setPresencasTabela] = useState([]);
   const month = [
@@ -77,6 +83,14 @@ function Presencas() {
   const selectedValue3 = React.useMemo(
     () => Array.from(selected3).join(", ").replaceAll("_", " "),
     [selected3]
+  );
+  const selectedValue4 = React.useMemo(
+    () => Array.from(selected4).join(", ").replaceAll("_", " "),
+    [selected4]
+  );
+  const selectedValue5 = React.useMemo(
+    () => Array.from(selected5).join(", ").replaceAll("_", " "),
+    [selected5]
   );
   useEffect(() => {
     const fetchPosts = async () => {
@@ -321,11 +335,11 @@ function Presencas() {
       `${quartoNumero}`;
     //   alert(codigoGerado);
     try {
-      if (nomeEmpresa === "" || nomeColaborador === "" || senha === "") {
+      if (selectedValue5 === "" || selectedValue4 === "" || senha === "") {
         alert("Todos os capos devem ser preenchidos");
       } else {
-        if (nomeEmpresa === "Crowd Masters Barbershop") {
-          if (funcionarios.includes(nomeColaborador)) {
+        if (selectedValue5 === "Crowd Masters Barbershop") {
+          if (funcionarios.includes(selectedValue4)) {
             if (senhas.includes(senha)) {
               if (presencas.length === 0) {
                 try {
@@ -337,10 +351,10 @@ function Presencas() {
                     }),
                   });
                   setProcessando(true);
-                  window.localStorage.setItem("colaborador", nomeColaborador);
+                  window.localStorage.setItem("colaborador", selectedValue4);
                   window.localStorage.setItem("codigo", codigoGerado);
                   window.localStorage.setItem("tipoPresenca", selectedValue3);
-                  router.push(`/presencaCodigp/${nomeColaborador}`);
+                  router.push(`/presencaCodigp/${selectedValue4}`);
                 } catch (error) {
                   console.log(error);
                 }
@@ -358,10 +372,10 @@ function Presencas() {
                       }
                     );
                     setProcessando(true);
-                    window.localStorage.setItem("colaborador", nomeColaborador);
+                    window.localStorage.setItem("colaborador", selectedValue4);
                     window.localStorage.setItem("codigo", codigoGerado);
                     window.localStorage.setItem("tipoPresenca", selectedValue3);
-                    router.push(`/presencaCodigp/${nomeColaborador}`);
+                    router.push(`/presencaCodigp/${selectedValue4}`);
                   });
                 } catch (error) {
                   console.log(error);
@@ -520,20 +534,61 @@ function Presencas() {
           <Container>
             <Card>
               <Card.Body>
-                <Input
-                  value={nomeColaborador}
-                  onChange={(ev) => setNomeColaborador(ev.target.value)}
-                  className="mb-4"
-                  type="text"
-                  placeholder="Nome do Colaborador"
-                />
-                <Input
-                  value={nomeEmpresa}
-                  onChange={(ev) => setNomeEmpresa(ev.target.value)}
-                  className="mb-4"
-                  type="text"
-                  placeholder="Nome da Empresa"
-                />
+              <Dropdown>
+                <Dropdown.Button flat color="primary" css={{ tt: "capitalize" }}>
+                  {selectedValue4}
+                </Dropdown.Button>
+                <Dropdown.Menu
+                  aria-label="Single selection actions"
+                  color="primary"
+                  disallowEmptySelection
+                  selectionMode="single"
+                  selectedKeys={selected4}
+                  onSelectionChange={setSelected4}
+                >
+                  <Dropdown.Item key="Carlos Avelino Mabote">
+                    Carlos Avelino Mabote
+                  </Dropdown.Item>
+                  <Dropdown.Item key="Almiro Pires">Almiro Pires</Dropdown.Item>
+                  <Dropdown.Item key="Amelia Marcos Franguana">
+                    Amelia Marcos Franguana
+                  </Dropdown.Item>
+                  <Dropdown.Item key="Gloria David Timane">
+                    Gloria David Timane
+                  </Dropdown.Item>
+                  <Dropdown.Item key="Moises Lucas Cuna">
+                    Moises Lucas Cuna
+                  </Dropdown.Item>
+                  <Dropdown.Item key="Stelio Aderito Fanheiro">
+                    Stelio Aderito Fanheiro
+                  </Dropdown.Item>
+                  <Dropdown.Item key="Fatima Regina Come">
+                  Fatima Regina Come
+                  </Dropdown.Item>
+                  <Dropdown.Item key="Dercia Nelson Samuel">
+                  Dercia Nelson Samuel
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+              <div className="mb-4"></div>
+              <Dropdown>
+                <Dropdown.Button flat color="primary" css={{ tt: "capitalize" }}>
+                  {selectedValue5}
+                </Dropdown.Button>
+                <Dropdown.Menu
+                  aria-label="Single selection actions"
+                  color="primary"
+                  disallowEmptySelection
+                  selectionMode="single"
+                  selectedKeys={selected5}
+                  onSelectionChange={setSelected5}
+                >
+                  <Dropdown.Item key="Crowd Masters Barbershop">
+                  Crowd Masters Barbershop
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+              <div className="mb-4"></div>
                 <Dropdown>
                   <Dropdown.Button
                     flat

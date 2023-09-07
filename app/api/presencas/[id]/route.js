@@ -5,7 +5,7 @@ export const GET = async (request, { params }) => {
   try {
     await connectToDB();
 
-    const prompt = await Presencas.find({ creator: params.id }).populate(
+    const prompt = await Presencas.find({ creator: params.id }).sort({ nomeColaborador: 1 }).populate(
       "creator"
     );
     if (!prompt) return new Response("Not found", { status: 404 });
