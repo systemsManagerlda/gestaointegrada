@@ -6,6 +6,7 @@ const PresencasSchema = new Schema({
     ref: "User",
   },
   nomeColaborador: { type: String, require: true },
+  nomeEmpresa: { type: String, require: true },
   horaChegada: { type: String, require: true },
   data: { type: String, require: true },
   tipoPresenca: { type: String, require: true },

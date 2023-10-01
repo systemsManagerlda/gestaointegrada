@@ -64,7 +64,7 @@ function PresencaCodigo({ params }) {
       currentdate.getMinutes() +
       ":" +
       currentdate.getSeconds();
-    // presencas.map((cod) => {      
+    // presencas.map((cod) => {
     // });
     if (true) {
       try {
@@ -73,6 +73,7 @@ function PresencaCodigo({ params }) {
             method: "POST",
             body: JSON.stringify({
               nomeColaborador: colaboradorLocal,
+              nomeEmpresa: "Crowd Masters Barbershop",
               horaChegada: `${currentdate.getHours()}:${currentdate.getMinutes()}:${currentdate.getSeconds()}`,
               data: `${currentdate.getDate()}/${
                 currentdate.getMonth() + 1

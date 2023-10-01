@@ -2,14 +2,22 @@ import Presencas from "../../../models/presencas";
 import { connectToDB } from "../../../utils/database";
 
 export const POST = async (req, res) => {
-  const { nomeColaborador, horaChegada, data, mes, tipoPresenca, userId } =
-    await req.json();
+  const {
+    nomeColaborador,
+    nomeEmpresa,
+    horaChegada,
+    data,
+    mes,
+    tipoPresenca,
+    userId,
+  } = await req.json();
 
   try {
     await connectToDB();
     const newEvento = new Presencas({
       creator: userId,
       nomeColaborador,
+      nomeEmpresa,
       horaChegada,
       data,
       tipoPresenca,
